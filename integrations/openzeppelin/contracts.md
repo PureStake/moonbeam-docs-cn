@@ -19,6 +19,9 @@ OpenZeppelin合约和库已成为行业标准，其开源代码模板经历了�
 
 OpenZeppelin开发了一种基于网络的线上智能合约交互式工具，它可能是使用OpenZeppelin代码编写智能合约最简单快捷的方式。这一工具称为Contracts Wizard，可以在[OpenZeppelin文档页面](https://docs.openzeppelin.com/contracts/4.x/wizard)找到。
 
+<style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container'><iframe src='https://www.youtube.com/embed/l8RTwu6hGpY' frameborder='0' allowfullscreen></iframe></div>
+<style>.caption { font-family: Open Sans, sans-serif; font-size: 0.9em; color: rgba(170, 170, 170, 1); font-style: italic; letter-spacing: 0px; position: relative;}</style><div class='caption'>In this video, we use Open Zeppelin Wizard to deploy an ERC-20 token to Moonbase Alpha</a></div>
+
 目前Contracts Wizard支持以下ERC标准：
 
  - [**ERC20**](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) —— 遵守[EIP-20](https://eips.ethereum.org/EIPS/eip-20)的同质化代币标准。同质化指的是所有代币均相同，并可互换，也就是说它们具有相同的价值。同质化代币的一个典型例子就是法币，面值相等的纸币其价值相等。
@@ -72,7 +75,7 @@ Contracts Wizard由以下环节组成：
  2. 确保文档已创建成功。点击文档，利用文本编辑器打开文档
  3. 使用文档编辑器编写智能合约。在本示例中，我们使用了以下代码：
 
-```sol
+```solidity
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -128,7 +131,7 @@ contract MyToken is ERC20, Ownable {
 
 下一步需要编写智能合约并进行编译。在本示例中，我们使用了以下代码：
 
-```sol
+```solidity
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -192,7 +195,7 @@ OpenZeppelin的ERC1155代币合约提供只能在`constructor`函数中调用的
 
 和[ERC20](/integrations/openzeppelin/contracts/#deploying-an-erc20-token)代币部署一样，下一步需要编写智能合约并进行编译。在本示例中，我们使用了以下代码：
 
-```sol
+```solidity
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";

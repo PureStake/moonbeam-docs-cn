@@ -31,7 +31,7 @@ description: 本教程将展示如何通过提名收集人在Moonbeam质押代�
 |        轮次        |      | {{ networks.moonbase.staking.round_blocks }}区块（{{ networks.moonbase.staking.round_hours }}小时） |
 |      绑定时长      |      |         {{ networks.moonbase.staking.bond_lock }}轮          |
 
-## 外部参数定义
+## 外部参数定义 {: #extrinsics-definitions } 
 
 质押挖矿模块有很多外部参数，本教程无法逐一进行介绍。但以下列表已经囊括与提名流程相关的外部参数：
 
@@ -44,25 +44,69 @@ description: 本教程将展示如何通过提名收集人在Moonbeam质押代�
  - **nominatorBondMore** —— 两个输入值：已提名的收集人地址及质押数量。为已获提名的收集人增加质押代币数量的外部参数
  - **revokeNomination** —— 一个输入值：已提名的收集人地址。撤销现有提名的外部参数
 
-## 获取收集人名单 {: #extrinsics-definitions } 
+## 获取收集人名单 {: #retrieving-the-list-of-collators } 
 
 在开始质押代币前，从网络中获取收集人名单至关重要。名单可在“Developer”标签下的“Chain state”进行查看。
 
-![Staking Account](/images/staking/staking-stake-10.png)
+![Staking Account](/images/staking/staking-stake-1.png)
 
 在此，请提供以下信息：
 
- 1. 选择进行交互的模块。在本示例中为`parachainStaking`模块
- 2. 选择请求状态。在本示例中为`selectedCandidates`或`candidatePool`状态
- 3. 点击"+"按钮发送状态请求
-## Retrieving the List of Collators {: #retrieving-the-list-of-collators } 
+ 1. Head to the "Developer" tab 
+ 2. Click on "Chain State"
+ 3. Choose the pallet to interact with. In this case, it is the `parachainStaking` pallet
+ 4. Choose the state to query. In this case, it is the `selectedCandidates` or `candidatePool` state
+ 5. Send the state query by clicking on the "+" button
 
 以下每个外部参数都会返回不同结果：
 
  - **selectedCandidates** —— 返回目前处于活跃状态的收集人群体，也就是总代币质押量前八名的收集人（提名人的质押量也包括在内）
  - **candidatePool** —— 返回目前所有收集人的名单，包括不在活跃收集人群体中的收集人
 
-![Staking Account](/images/staking/staking-stake-11.png)
+![Staking Account](/images/staking/staking-stake-2.png)
+
+## Get the Collator Nominator Count {: #get-the-collator-nominator-count }
+
+First, you need to get the `collator_nominator_count` as you'll need to submit this parameter in a later transaction. To do so, you'll have to run the following JavaScript code snippet from within [PolkadotJS](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwss.testnet.moonbeam.network#/js):
+
+
+
+```js
+// Simple script to get collator_nominator_count
+// Remember to replace COLLATOR_ADDRESS with the address of desired collator.
+const collatorAccount = 'COLLATOR_ADDRESS'; 
+const collatorInfo = await api.query.parachainStaking.collatorState2(collatorAccount);
+console.log(collatorInfo.toHuman()["nominators"].length);
+```
+
+ 1. Head to the "Developer" tab 
+ 2. Click on "JavaScript"
+ 3. Copy the code from the previous snippet and paste it inside the code editor box 
+ 4. (Optional) Click the save icon and set a name for the code snippet, for example, "Get collator_nominator_count". This will save the code snippet locally
+ 5. Click on the run button. This will execute the code from the editor box
+ 6. Copy the result, as you'll need it when initiating a nomination
+
+![Get collator nominator count](/images/staking/staking-stake-3.png)
+
+## Get your Number of Existing Nominations {: #get-your-number-of-existing-nominations }
+If you've never made a nomination from your address you can skip this section. However, if you're unsure how many existing nominations you have, you'll want to run the following JavaScript code snippet to get `nomination_count` from within [PolkadotJS](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwss.testnet.moonbeam.network#/js):
+
+```js
+// Simple script to get your number of existing nominations.
+// Remember to replace YOUR_ADDRESS_HERE with your nominator address.
+const yourNominatorAccount = 'YOUR_ADDRESS_HERE'; 
+const nominatorInfo = await api.query.parachainStaking.nominatorState(yourNominatorAccount);
+console.log(nominatorInfo.toHuman()["nominations"].length);
+```
+
+ 1. Head to the "Developer" tab 
+ 2. Click on "JavaScript"
+ 3. Copy the code from the previous snippet and paste it inside the code editor box 
+ 4. (Optional) Click the save icon and set a name for the code snippet, for example, "Get existing nominations". This will save the code snippet locally
+ 5. Click on the run button. This will execute the code from the editor box
+ 6. Copy the result, as you'll need it when initiating a nomination
+
+![Get existing nomination count](/images/staking/staking-stake-4.png)
 
 ## 如何提名收集人 {: #how-to-nominate-a-collator } 
 
@@ -79,7 +123,7 @@ description: 本教程将展示如何通过提名收集人在Moonbeam质押代�
 
 目前所有与质押挖矿相关的功能都需要通过“Developer”标签下的“Extrinsics”菜单进入：
 
-![Staking Account](/images/staking/staking-stake-1.png)
+![Staking Account](/images/staking/staking-stake-5.png)
 
 提名收集人，需要提供以下信息：
 
@@ -88,24 +132,29 @@ description: 本教程将展示如何通过提名收集人在Moonbeam质押代�
  3. 选择本次交易需要使用的外部参数，这会决定接下来步骤的填写内容。在本示例中为`nominate`外部参数
  4. 设置您要提名的收集人地址。在本示例中为 `{{ networks.moonbase.staking.collators.address1 }}`
  5. 设置您要质押的代币数量
- 6. 点击“Submit Transaction”按钮，并签名确认交易
+ 6. Input the `collator_nominator_count` you [retrieved above from the JavaScript console](/staking/stake/#get-the-collator-nominator-count)
+ 7. Input the `nomination_count` [you retrieved from the Javascript console](/staking/stake/#get-your-number-of-existing-nominations). This is `0` if you haven't yet nominated a collator
+ 8. Click the "Submit Transaction" button and sign the transaction
 
-![Staking Join Nominators Extrinsics](/images/staking/staking-stake-2.png)
+![Staking Join Nominators Extrinsics](/images/staking/staking-stake-6.png)
+
+!!! note
+    The parameters used in steps 6 and 7 are for gas estimation purposes and do not need to be exact. However, they should not be lower than the actual values. 
 
 交易确认后可以返回到“Accounts”标签查看冻结余额（应与质押的代币数量一致）。
 
 您可以在“Developer”标签下的“Chain state”中查看是否已成功提名。
 
-![Staking Account and Chain State](/images/staking/staking-stake-3.png)
+![Staking Account and Chain State](/images/staking/staking-stake-7.png)
 
 在此，请提供以下信息：
 
  1. 选择需要进行交互的模块。在本示例中为`parachainStaking`模块
- 2. 选择请求状态。在本示例中为`nominators`状态
- 3. 确保已经关闭“include option”滑块
+ 2. Choose the state to query. In this case, it is the `nominatorState`
+ 3. Make sure to enable the "include option" slider
  4. 点击"+"按钮发送状态请求
 
-![Staking Chain State Query](/images/staking/staking-stake-4.png)
+![Staking Chain State Query](/images/staking/staking-stake-8.png)
 
 在返回结果中可以看到，账户中（在本示例中为Alice的账户）有一个提名列表，每个提名都包含了收集人的目标地址及质押数量。
 
@@ -125,25 +174,24 @@ description: 本教程将展示如何通过提名收集人在Moonbeam质押代�
  4. 设置您希望移除提名的收集人地址。在本示例中为 `{{ networks.moonbase.staking.collators.address2 }}`
  5. 点击“提交交易”按钮，并签名确认交易
 
-![Staking Revoke Nomination Extrinsic](/images/staking/staking-stake-7.png)
+![Staking Revoke Nomination Extrinsic](/images/staking/staking-stake-9.png)
 
 交易确认后，可以在“Developer”标签下的“Chain state”中查看是否已撤销提名。
 
 在此需要提供以下信息：
 
   1. 选择需要进行交互的模块。在本示例中为`parachainStaking`模块
-
   2. 选择请求状态。在本示例中为`nominatorState`状态
-  3. 确保已经关闭“include options”滑块
+  3. Make sure to enable the "include options" slider
   4. 点击"+"按钮发送状态请求
 
-![Staking Revoke Nomination Cain State](/images/staking/staking-stake-8.png)
+![Staking Revoke Nomination Chain State](/images/staking/staking-stake-8.png)
 
 在返回结果中可以看到，账户中（在本示例中为Alice的账户）有一个提名列表，每个提名都包含了收集人的目标地址及质押数量。
 
 通过`leaveNominators`外部参数，您可以继续移除所有正在进行中的提名（“外部参数”指引中的第3步）。这一参数无输入值：
 
-![Staking Leave Nominatiors Extrinsic](/images/staking/staking-stake-9.png)
+![Staking Leave Nominatiors Extrinsic](/images/staking/staking-stake-10.png)
 
 确认交易后，您的账户将不会出现在`nominatorState`状态中，同时您（相关质押）的冻结余额也将归零。
 
@@ -155,4 +203,4 @@ description: 本教程将展示如何通过提名收集人在Moonbeam质押代�
 
 从上述例子可以看到，在经过两轮支付后，Alice获得了`0.0044`代币作为奖励：
 
-![Staking Reward Example](/images/staking/staking-stake-10.png)
+![Staking Reward Example](/images/staking/staking-stake-1.png)

@@ -30,7 +30,8 @@ description: 如何通过智能合约或者Javascript在Moonbeam以太坊DApp使
  - Moonbeam上的Band智能合约（目前已部署在Moonbase Alpha测试网上）
  - Javascript辅助库
 
-## 通过智能合约获取数据 {: #get-data-using-smart-contracts }
+## 通过智能合约获取数据 {: #get-data-using-smart-contracts } 
+
 Moonbeam上的Band Protocol智能合约可通过实现`StdReference`合约接口从而查询链上数据（例如代币价格），该接口公开了`getReferenceData`和`getReferenceDataBulk`函数。
 
 第一个函数`getReferenceData`输入两串字符（基础货币和报价货币的代码），通过向`StdReference`合约发送请求来获取这两种货币之间的最新汇率，并以`ReferenceData`结构返回。
@@ -41,7 +42,7 @@ Moonbeam上的Band Protocol智能合约可通过实现`StdReference`合约接口
  - 基础货币价格最后更新时间（UNIX时间戳）
  - 报价货币价格最后更新时间（UNIX时间戳）
 
-```
+```js
 struct ReferenceData {
    uint256 rate; 
    uint256 lastUpdatedBase; 
@@ -59,7 +60,7 @@ struct ReferenceData {
 
 以下智能合约代码以简单的示例展示了`StdReference`合约和`getReferenceData`函数。合约仅为举例，不作实际之用。`IStdReference.sol`接口明确了ReferenceData结构和可用于获取报价的函数。
 
-```sol
+```solidity
 pragma solidity 0.6.11;
 pragma experimental ABIEncoderV2;
 
@@ -86,14 +87,14 @@ interface IStdReference {
 ```
 接下来可以使用`DemoOracle`脚本。该脚本含有4个函数：
 
- - getPrice：请求单一基础货币报价的_视图_函数。在此示例中，`BTC`以`USD`为报价单位
- - getMultiPrices：请求多个基础货币报价的_视图_函数。在此示例中，`BTC`和`ETH`均以`USD`为报价单位
- - savePrice：请求_基础货币/报价货币_对数据的_公有_函数。不同元素作为字符串输入，如 `_base = "BTC", _quotes = "USD"`。函数将发送交易并修改储存在合约中的`price`变量
- - saveMultiPrices：一个请求多个_基础货币/报价货币_对数据的_公有_函数。不同元素作为字符串阵列输入，如`_bases = ["BTC","ETH"], _quotes = ["USD","USD"]`。函数将发送交易并修改储存在合约中的`prices`阵列，阵列将按照输入顺序显示每个报价对的价格。
+ - **getPrice**(*string[]* base, *string[]* quotes): 请求单一基础货币报价的_视图_函数。在此示例中，`BTC`以`USD`为报价单位
+ - **getMultiPrices**(*string[]* bases, *string[]* quotes): 请求多个基础货币报价的_视图_函数。在此示例中，`BTC`和`ETH`均以`USD`为报价单位
+- **savePrice**(*string* base, *string* quote): 请求_基础货币/报价货币_对数据的_公有_函数。不同元素作为字符串输入，如 `_base = "BTC", _quotes = "USD"`。函数将发送交易并修改储存在合约中的`price`变量
+- **saveMultiPrices**(*string[]* bases, *string[]* quotes): 一个请求多个_基础货币/报价货币_对数据的_公有_函数。不同元素作为字符串阵列输入，如`_bases = ["BTC","ETH"], _quotes = ["USD","USD"]`。函数将发送交易并修改储存在合约中的`prices`阵列，阵列将按照输入顺序显示每个报价对的价格。
 
 部署时，构造函数需要聚合合约地址以连接到目标网络。
 
-```sol
+```solidity
 pragma solidity 0.6.11;
 pragma experimental ABIEncoderV2;
 
@@ -153,7 +154,7 @@ contract DemoOracle {
 
 我们已经在Moonbase Alpha测试网部署了一个合约（地址为`0xf15c870344c1c02f5939a5C4926b7cDb90dEc655`），方便开发者查看Band Protocol预言机的喂价信息。为此，您需要部署以下接口合约：
 
-```sol
+```solidity
 pragma solidity 0.6.11;
 pragma experimental ABIEncoderV2;
 
@@ -166,8 +167,8 @@ interface TestInterface {
 
 通过这一合约将创建两个视图函数，以下示例与上述示例非常相似：
 
- - getPrice: 根据函数中对应输入的数据，提供单一基础货币/报价货币对喂价，即BTC/USD
- - getMultiPrices: 根据函数中对应输入的数据，提供多种基础货币/报价货币对喂价，即BTC/USD、ETH/USD、ETH/EUR
+ - **getPrice**(*string* base, *string* quote): 根据函数中对应输入的数据，提供单一基础货币/报价货币对喂价，即BTC/USD
+ - **getMultiPrices**(*string[]* bases, *string[]* quotes): 根据函数中对应输入的数据，提供多种基础货币/报价货币对喂价，即BTC/USD、ETH/USD、ETH/EUR
 
 例如，使用[Remix](/integrations/remix/)接口可以方便地获取BTC/USD价格对。
 
@@ -195,7 +196,7 @@ getReferenceData(['BTC/USD', 'BTC/ETH', 'ETH/EUR'])
 
 然后，函数将返回以下结构的数据阵列：
 
-```
+```js
 [
   {
     pair: 'BTC/USD',

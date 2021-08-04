@@ -32,7 +32,7 @@ description: 如何通过智能合约在Moonbeam以太坊DApp使用Razor Network
 
 合约通过执行桥接合约接口可调用`getResult`和`getJob`函数以使用Razor Network预言机来获取代币价格等链上数据。
 
-```
+```solidity
 pragma solidity 0.6.11;
 
 interface Razor {
@@ -61,7 +61,7 @@ interface Razor {
  - savePrice：一个请求单一Job ID的_公有_函数。函数将发送交易并修改储存在合约中的`price`变量。
  - saveMultiPrices：一个请求多个Job ID的_公有_函数。例如，输入任务ID`[1,2]`即可同时获取`ETH`/`USD`和`BTC`/`USD`报价。函数将发送交易并修改储存在合约中的`pricesArr`阵列，阵列将按照输入顺序显示每个报价对的价格。
 
-```sol
+```solidity
 pragma solidity 0.6.11;
 
 interface Razor {
