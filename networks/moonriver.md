@@ -15,10 +15,10 @@ _更新至2021年6月30日_
 
 ## 初始配置 {: #initial-configurations } 
 
-Moonriver is scheduled to follow a [5-phase launch process](https://moonbeam.network/networks/moonriver/launch/). Currently, Moonriver is in Phase 1 of the launch process and has the following configurations:
+Moonriver is scheduled to follow a [5-phase launch process](https://moonbeam.network/networks/moonriver/launch/). Currently, Moonriver is in Phase 3 of the launch process and has the following configurations:
 
 - Runs as a parachain connected to the Kusama relay chain
-- Has an active set of {{ networks.moonriver.staking.max_collators }} collators, all hosted by PureStake on behalf of the Moonbeam Foundation. There is an initial collator election during Phase 1 to expand the collator set to parties outside of the Moonbeam team
+- Has an active set of {{ networks.moonriver.staking.max_collators }} collators
 - There are two RPC endpoints (hosted by PureStake). People can run full nodes to access their own private RPC endpoints
 
 ![Moonriver Diagram](/images/moonriver/moonriver-diagram.png)
@@ -90,8 +90,7 @@ Moonriver的最小单位是Sediment（Sed），需要10^18个Sediment以组成�
 
 Moonriver通过其5个阶段的上线过程后，网络将会更新成为一个完全去中心化的权益证明网络。如果您想了解每个阶段的最新内容，请访问[网络上线状态](https://moonbeam.network/networks/moonriver/launch/)页面。
 
-In the current phase, Phase 1, there is an initial collator election to fill the {{ networks.moonriver.staking.max_collators }} spots in the active collator set. Once governance is enabled in Phase 2, the number of collators in the active set will be subject to governance. The active set will consist of the top collators by stake, including nominations.
-
+In Phase 1, there was an initial collator election to fill the active collator set with parties outside of the Moonbeam team. The number of collators in the active set will be subject to governance. The active set will consist of the top collators by stake, including nominations.
 ## 限制 {: #limitations } 
 
 部分[预编译](https://docs.klaytn.com/smart-contract/precompiled-contracts)功能目前仍无法使用，其余内建的功能皆可使用。您可在[此页面](/integrations/precompiles/)查看当前可使用的预编译方案。
