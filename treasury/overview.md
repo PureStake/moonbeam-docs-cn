@@ -24,27 +24,25 @@ description: 作为波卡（Polkadot）平行链，Moonbeam将使用由理事会
 - **支出期** —— 以区块为单位的天数，在此期间，财政库为各类提案提供资金，但不超过最大值
 - **最多批准提案数** —— 最多可以在待支出列队中的提案数量
 
-目前，财政库的价值如下：
-
 === "Moonbase Alpha"
 
-|      变量      |      |                              值                              |
-| :------------: | :--: | :----------------------------------------------------------: |
-|   提案保证金   |      | {{ networks.moonbase.treasury.proposal_bond }}%提案支出的{{ networks.moonriver.treasury.proposal_bond }}% |
-| 最低提案保证金 |      |    {{ networks.moonbase.treasury.proposal_bond_min }} DEV    |
-|     支出期     |      | {{ networks.moonbase.treasury.spend_period_blocks }} 区块 ({{ networks.moonbase.treasury.spend_period_days}} 天) |
-|  最高批准提案  |      |   {{ networks.moonbase.treasury.max_approved_proposals }}    |
-| %的交易费分配  |      |      {{ networks.moonbase.treasury.tx_fees_allocated }}      |
+    |      变量      |      |                              值                              |
+    | :------------: | :--: | :----------------------------------------------------------: |
+    |   提案保证金   |      | {{ networks.moonbase.treasury.proposal_bond }}%提案支出的{{ networks.moonriver.treasury.proposal_bond }}% |
+    | 最低提案保证金 |      |    {{ networks.moonbase.treasury.proposal_bond_min }} DEV    |
+    |     支出期     |      | {{ networks.moonbase.treasury.spend_period_blocks }} 区块 ({{ networks.moonbase.treasury.spend_period_days}} 天) |
+    |  最高批准提案  |      |   {{ networks.moonbase.treasury.max_approved_proposals }}    |
+    | %的交易费分配  |      |      {{ networks.moonbase.treasury.tx_fees_allocated }}      |
 
 === "Moonriver"
 
-|      变量      |      |                              值                              |
-| :------------: | :--: | :----------------------------------------------------------: |
-|   提案保证金   |      | {{ networks.moonriver.treasury.proposal_bond }}%提案支出的{{ networks.moonriver.treasury.proposal_bond }}% |
-| 最低提案保证金 |      |   {{ networks.moonriver.treasury.proposal_bond_min }} MOVR   |
-|     支出期     |      | {{ networks.moonriver.treasury.spend_period_blocks }} 区块 ({{ networks.moonriver.treasury.spend_period_days}} 天) |
-|  最高批准提案  |      |   {{ networks.moonriver.treasury.max_approved_proposals }}   |
-| %的交易费分配  |      |     {{ networks.moonriver.treasury.tx_fees_allocated }}      |
+    |      变量      |      |                              值                              |
+    | :------------: | :--: | :----------------------------------------------------------: |
+    |   提案保证金   |      | {{ networks.moonriver.treasury.proposal_bond }}%提案支出的{{ networks.moonriver.treasury.proposal_bond }}% |
+    | 最低提案保证金 |      |   {{ networks.moonriver.treasury.proposal_bond_min }} MOVR   |
+    |     支出期     |      | {{ networks.moonriver.treasury.spend_period_blocks }} 区块 ({{ networks.moonriver.treasury.spend_period_days}} 天) |
+    |  最高批准提案  |      |   {{ networks.moonriver.treasury.max_approved_proposals }}   |
+    | %的交易费分配  |      |     {{ networks.moonriver.treasury.tx_fees_allocated }}      |
 
 ## 社区财政库  {: #community-treasury } 
 

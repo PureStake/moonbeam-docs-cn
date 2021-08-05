@@ -9,9 +9,9 @@ description: 本文将简要描述Moonbeam计划建立的网络，一个位于Po
 
 以下是我们关于部署平行链的路线图：
 
- - Moonbase Alpha: PureStake主导平行链测试网（2020 九月
- - Moonrock: 部署于Rococo测试网上（_待定_）
- - Moonriver: 部署于Kusama上（2021 Q2末）
+ - Moonbase Alpha: PureStake主导平行链测试网（2020 九月)
+ - Moonrock: 部署于Rococo测试网上 (_May 2021_)
+ - Moonriver: 部署于Kusama上(_June 2021_)
  - Moonbeam: 部署于Polkadot上（2021 Q3末）
 
 这个策略能让我们在保持适当的更新速度同时，降低Polkadot 主网上Moonbeam软件升级的风险。同时，我们会在网络开放的时候提供更多关于如何使用不同以Moonbeam为基础的网络细节。
@@ -24,15 +24,18 @@ description: 本文将简要描述Moonbeam计划建立的网络，一个位于Po
 
 ## Moonrock {: #moonrock } 
 
-我们决定不参与Rococo第一波的平行链部署活动，自2020年9月我们发布测试网以来，我们一直在运行自己的平行链/中继链。
+We decided not to participate in the first parachain deployments to Rococo because we have been running our own parachain/relay chain setup since we launched our TestNet in September 2020.
 
-然而，当互操作性功能开通之后，我们仍期望将Moonbeam以平行链的形式部署在Rococo测试网上。这提供了一个与其他链测试这些功能的地方。
+However, Moonrock was deployed to Rococo for the first time in May 2021. 
+
 
 ## Moonriver {: #moonriver } 
 
-在部署于Polkadot主网之前，Moonbeam将会以平行链的形式发布在Kusama的网络上（[更多细节](https://www.purestake.com/news/moonbeam-on-kusama/)）。这需要平行链功能在Kusama上开通。
+In advance of deploying to the Polkadot MainNet, [Moonbeam launched Moonriver](https://moonbeam.network/announcements/moonriver-launch-kusama/) as a parachain on the Kusama network. The parachain functionality is live on Kusama and features are progressively being released according to the [Moonriver launch schedule](https://moonbeam.network/networks/moonriver/launch/). 
 
-我们计划在一些功能开通之后，在Moonriver上执行包括像[Crowdloan](https://wiki.polkadot.network/docs/learn-crowdloans)、[XCMP](https://wiki.polkadot.network/docs/learn-crosschain)和[SPREE](https://wiki.polkadot.network/docs/learn-crosschain)的平行链相关的功能。
+We plan to exercise parachain-related functionality such as [XCMP](https://wiki.polkadot.network/docs/learn-crosschain) and [SPREE](https://wiki.polkadot.network/docs/learn-spree) on Moonriver as those features become available.
+
+[Learn more about Moonriver](/networks/moonriver/).
 
 ## Moonbeam的Polkadot主网 {: #moonbeam-polkadot-mainnet } 
 

@@ -11,12 +11,12 @@ description: 通过此教程学习运行节点后在Moonbeam网络上成为收�
 
 收集人在网络上维护其所参与的平行链。他们运行（所在平行链及中继链的）完整节点，并为中继链验证人创建状态转移证明。
 
-Moonbase Alpha v6版本发布后，用户不仅可以创建完整节点，也可以调用`collate`功能，并作为收集人参与生态系统的运行。
+Users can spin up full nodes on Moonbase Alpha and Moonriver and activate the `collate` feature to participate in the ecosystem as collators.
 
 Moonbeam使用[Nimbus平行链共识框架](/learn/consensus/)，通过一个两步过滤器将收集人分配到区块生产插槽：
 
- - 平行链质押过滤器根据网络中的代币质押量挑选前{{ networks.moonbase.staking.max_collators }}名收集人。这个过滤后的池被称为“精选候选池”。每一轮这个池中的候选收集人都会进行更新。
- - 固定规模子集过滤法在第一次过滤的基础之上对每个区块生产插槽进行伪随机的子集选择。
+ - The parachain staking filter selects the top {{ networks.moonbase.staking.max_collators }} collators on Moonbase Alpha and the top {{ networks.moonriver.staking.max_collators }} collators on Moonriver in terms of tokens staked in each network. This filtered pool is called selected candidates, and selected candidates are rotated every round
+ - The fixed size subset filter picks a pseudo-random subset of the previously selected candidates for each block production slot
 
 此教程将带您完成以下步骤：
 
@@ -34,9 +34,19 @@ Moonbeam使用[Nimbus平行链共识框架](/learn/consensus/)，通过一个两
 
 ## 账户与质押要求 {: #accounts-and-staking-requirements } 
 
-和波卡（Polkadot）验证人相似，收集人也需要创建账户。Moonbeam使用的是拥有私钥的H160账户或者基本的以太坊式账户。另外，需要拥有提名质押量（DEV代币）才能够参与验证。目前收集人插槽数量有限，但未来可能会有所增加。 
+Similar to Polkadot validators, you need to create an account. For Moonbeam, this is an H160 account or basically an Ethereum style account from which you hold the private keys. In addition, you will need a minimum amount of tokens staked to be considered eligible (become a candidate). Only a certain amount of the top collators by nominated stake will be in the active set.
 
-收集人需要有至少{{ networks.moonbase.staking.collator_min_stake }}个DEV才有资格成为候选收集人。只有提名质押量最高的前{{ networks.moonbase.staking.max_collators }}名收集人才会进入活跃「收集人集」。
+=== "Moonbase Alpha"
+    |    Variable     |                          Value                          |
+    |:---------------:|:-------------------------------------------------------:|
+    |  Minimum stake  | {{ networks.moonbase.staking.collator_min_stake }} DEV  |
+    | Active set size | {{ networks.moonbase.staking.max_collators }} collators |
+
+=== "Moonriver"
+    |    Variable     |                          Value                           |
+    |:---------------:|:--------------------------------------------------------:|
+    |  Minimum stake  | {{ networks.moonriver.staking.collator_min_stake }} MOVR |
+    | Active set size | {{ networks.moonriver.staking.max_collators }} collators |
 
 ### PolkadotJS账户 {: #account-in-polkadotjs } 
 
@@ -53,6 +63,25 @@ Moonbeam使用[Nimbus平行链共识框架](/learn/consensus/)，通过一个两
 
 ## 成为候选收集人  {: #become-a-collator-candidate } 
 
+Before getting started, it's important to note some of the timings of different actions related to collation activities:
+
+=== "Moonbase Alpha"
+    |               Variable                |       Value        |
+    |:-------------------------------------:|:------------------:|
+    |    Join/leave collator candidates     | {{ networks.moonbase.collator_timings.join_leave_candidates.rounds }} rounds ({{ networks.moonbase.collator_timings.join_leave_candidates.hours }} hours) |
+    |        Add/remove nominations         | {{ networks.moonbase.collator_timings.add_remove_nominations.rounds }} rounds ({{ networks.moonbase.collator_timings.add_remove_nominations.hours }} hours) |
+    | Rewards payouts (after current round) | {{ networks.moonbase.collator_timings.rewards_payouts.rounds }} rounds ({{ networks.moonbase.collator_timings.rewards_payouts.hours }} hours) |
+
+=== "Moonriver"
+    |               Variable                |       Value        |
+    |:-------------------------------------:|:------------------:|
+    |    Join/leave collator candidates     | {{ networks.moonriver.collator_timings.join_leave_candidates.rounds }} rounds ({{ networks.moonriver.collator_timings.join_leave_candidates.hours }} hours) |
+    |        Add/remove nominations         | {{ networks.moonriver.collator_timings.add_remove_nominations.rounds }} rounds ({{ networks.moonriver.collator_timings.add_remove_nominations.hours }} hours) |
+    | Rewards payouts (after current round) | {{ networks.moonriver.collator_timings.rewards_payouts.rounds }} rounds ({{ networks.moonriver.collator_timings.rewards_payouts.hours }} hours) |
+
+
+!!! note 
+    The values presented in the previous table are subject to change in future releases.
 ### 获取候选池的大小  {: #get-the-size-of-the-candidate-pool } 
 
 首先，您需要获取 `candidatePool`的大小（可通过治理更改），该参数将用于后续的交易中。为此，您必须从[PolkadotJS](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwss.testnet.moonbeam.network# 中运行以下 JavaScript 代码片段/js)中运行以下JavaScript代码段:
@@ -74,14 +103,14 @@ console.log(`Candidate pool size is: ${candidatePool.length}`);
 
 ### 加入候选人池 {: #join-the-candidate-pool } 
 
-节点开始运行并同步网络后，在[PolkadotJS](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwss.testnet.moonbeam.network#/accounts)通过以下步骤成为候选收集人（并加入候选人池）：
+Once your node is running and in sync with the network, you become a collator candidate (and join the candidate pool). Depending on which network you are connected to, head to PolkadotJS for [Moonbase Alpha](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwss.testnet.moonbeam.network#/accounts) or [Moonriver](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwss.moonriver.moonbeam.network#/accounts) and take the following steps:
 
  1. 进入“Developers”标签，点击“Extrinsics”
  2. 选择您用于参与收集活动的账户
- 3. 确认您的收集人账户已充值至少{{ networks.moonbase.staking.collator_min_stake }}个DEV代币，并有多余金额用于支付交易费 
+ 3. Confirm your collator account is funded with at least the [minimum stake required](#accounts-and-staking-requirements) plus some extra for transaction fees 
  4. 在“submit the following extrinsics”菜单中选择`parachainStaking`模块
  5. 打开下拉菜单，在质押相关的所有外部参数中，选择`joinCandidates()`函数
- 6. 将绑定金额设置到至少{{ networks.moonbase.staking.collator_min_stake }} DEV代币（即成为Moonbase Alpha上候选收集人所需最低数量）。这里仅考虑收集人 的绑定数量，其他提名质押量不计入
+ 6. Set the bond to at least the [minimum amount](#accounts-and-staking-requirements) to be considered a collator candidate. Only collator bond counts for this check. Additional nominations do not count
  7. 设置候选人数量即候选人池大小。如何设置该数值请查看[此文档](https://docs.moonbeam.network/node-operators/networks/collato #get-the-size-of-the-candidate-pool)
  8. 提交交易。根据向导指引使用创建账户时的密码进行交易签名
 
@@ -89,28 +118,14 @@ console.log(`Candidate pool size is: ${candidatePool.length}`);
 
 !!! 注意事项
     函数名称和最低绑定金额要求可能会在未来发布新版本时有所调整。
-
-如上所述，只有提名质押量最高的前{{ networks.moonbase.staking.max_collators }}名收集人才可以进入活跃「收集人集」。
+  
+As mentioned before, only the top {{ networks.moonbase.staking.max_collators }} collators on Moonbase Alpha and the top {{ networks.moonriver.staking.max_collators }} collators on Moonriver by nominated stake will be in the active set. 
 
 ### 停止参与收集活动 {: #stop-collating } 
 
 与波卡（Polkadot）的`chill()`函数相似，按照前述相同步骤进行操作，便可离开候选收集人池，但在第5步时需要选择`leaveCandidates()`函数。
 
-
-### 相关时长 {: #session-keys } 
-
-下表列出了收集相关活动所需时长：
-
-|           活动           |      | 轮次 |      | 时长（小时） |
-| :----------------------: | :--: | :--: | :--: | :----------: |
-|  加入/离开候选收集人池   |      |  2   |      |      4       |
-|      新增/移除提名       |      |  1   |      |      2       |
-| 奖励支付（在本轮结束后） |      |  2   |      |      4       |
-
-!!! 注意事项
-    上表所列值可能会在未来发布新版本时有所调整。
-
-## 会话密钥
+## 会话密钥 {: #session-keys } 
 
 随着[Moonbase Alpha v8](/networks/moonbase/)版本的发布，收集人将使用author ID（基本上是[会话密钥](https://wiki.polkadot.network/docs/learn-keys#session-keys)）签名区块。为了符合Substrate标准，Moonbeam收集人的会话密钥为[SR25519](https://wiki.polkadot.network/docs/learn-keys#what-is-sr25519-and-where-did-it-come-from)。本教程将向您展示如何创建/转换与收集人节点相关的会话密钥。
 
@@ -141,13 +156,16 @@ curl http://127.0.0.1:9933 -H \
 
 生成author ID（会话密钥）后，将其映射到您的H160帐户（以太坊式地址）。该账户将用于接收区块奖励，请确保您拥有其私钥。
 
-在author ID映射到您的账户时，系统将会发送{{ networks.moonbase.staking.collator_map_bond }}个DEV代币绑定到您的账户。该代币由author ID注册获得。
+There is a bond that is sent when mapping your author ID with your account. This bond is per author ID registered. The bond set is as follows:
+
+ - Moonbase Alpha - {{ networks.moonbase.staking.collator_map_bond }} DEV tokens 
+ - Moonriver - {{ networks.moonriver.staking.collator_map_bond }} MOVR tokens. 
 
 `authorMapping`模块具有以下外部编程：
 
- - **addAssociation** — 一个输入值：author ID。将您的author ID映射到发送交易的H160账户，确认这是其私钥的真正持有者。这将需要大约{{ networks.moonbase.staking.collator_map_bond }}个代币绑定。
- - **clearAssociation** — 一个输入值：author ID。将清除author ID和发送交易的H160账户之间的连接，需要由author ID的持有者进行操作。这将退还{{ networks.moonbase.staking.collator_map_bond }}个DEV代币。
- - **updateAssociation** — 两个输入值：新的与旧的author ID。将旧的author ID映射至新的author ID，对私钥转换和迁移极为实用。并将自动执行`add`和`clear`两个连接外部参数，使得私钥转换无需第二个债券。
+ - **addAssociation**(*address* authorID) — maps your author ID to the H160 account from which the transaction is being sent, ensuring is the true owner of its private keys. It requires a bond
+ - **clearAssociation**(*address* authorID) — clears the association of an author ID to the H160 account from which the transaction is being sent, which needs to be the owner of that author ID. Also refunds the bond
+ - **updateAssociation**(*address* oldAuthorID, *address* newAuthorID) —  updates the mapping from an old author ID to a new one. Useful after a key rotation or migration. It executes both the `add` and `clear` association extrinsics atomically, enabling key rotation without needing a second bond
 
 这个模块同时也新增以下RPC调用（链状态）：
 
@@ -155,7 +173,7 @@ curl http://127.0.0.1:9933 -H \
 
 ### 映射外部信息 {: #mapping-extrinsic } 
 
-如果您想要将您的author ID映射至您的账户，您需要成为[候选人池](https://docs.moonbeam.network/node-operators/networks/collator/#become-a-collator-candidate)中的一员。当您成功成为候选人，您将需要传送您的映射外部信息（交易）。请注意，每一次注册author ID将会绑定{{ networks.moonbase.staking.collator_map_bond }}个DEV代币。请跟随以下步骤来进行操作：
+To map your author ID to your account, you need to be inside the [candidate pool](#become-a-collator-candidate). Once you are a collator candidate, you need to send a mapping extrinsic (transaction). Note that this will bond tokens per author ID registered. To do so, take the following steps:
 
  1. 进入“Developer“标签
  2. 选择”Extrinsics”

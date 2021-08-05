@@ -19,16 +19,27 @@ Moonbeam基于[Polkadot权益证明模型](https://wiki.polkadot.network/docs/le
 
 --8<-- 'text/staking/staking-definitions.md'
 
-目前，对于Moonbase Alpha来说，上述参数具体如下：
+=== "目前，对于Moonbase Alpha来说，上述参数具体如下："
 
-|          变量          |      |                              值                              |
-| :--------------------: | :--: | :----------------------------------------------------------: |
-|     最低提名质押量     |      |     {{ networks.moonbase.staking.min_nom_stake }} tokens     |
-|     最低提名持有量     |      |     {{ networks.moonbase.staking.min_nom_amount}} tokens     |
-| 每位收集人的提名者限额 |      |       {{ networks.moonbase.staking.max_nom_per_col }}        |
-| 每位提名者的收集人限额 |      |       {{ networks.moonbase.staking.max_col_per_nom }}        |
-|          轮次          |      | {{ networks.moonbase.staking.round_blocks }} blocks ({{ networks.moonbase.staking.round_hours }} hours) |
-|        绑定时长        |      |       {{ networks.moonbase.staking.bond_lock }} rounds       |
+    |          变量          |      |                              值                              |
+    | :--------------------: | :--: | :----------------------------------------------------------: |
+    |     最低提名质押量     |      |     {{ networks.moonbase.staking.min_nom_stake }} tokens     |
+    |     最低提名持有量     |      |     {{ networks.moonbase.staking.min_nom_amount}} tokens     |
+    | 每位收集人的提名者限额 |      |       {{ networks.moonbase.staking.max_nom_per_col }}        |
+    | 每位提名者的收集人限额 |      |       {{ networks.moonbase.staking.max_col_per_nom }}        |
+    |          轮次          |      | {{ networks.moonbase.staking.round_blocks }} blocks ({{ networks.moonbase.staking.round_hours }} hours) |
+    |        绑定时长        |      |       {{ networks.moonbase.staking.bond_lock }} rounds       |
+
+=== "Moonriver"
+
+    |             Variable             |  |                                                   Value                                                   |
+    |:--------------------------------:|::|:---------------------------------------------------------------------------------------------------------:|
+    |     Minimum nomination stake     |  |                           {{ networks.moonriver.staking.min_nom_stake }} MOVR                             |
+    |        Minimum nomination        |  |                           {{ networks.moonriver.staking.min_nom_amount}} MOVR                             |
+    | Maximum nominators per collators |  |                             {{ networks.moonriver.staking.max_nom_per_col }}                              |
+    | Maximum collators per nominator  |  |                             {{ networks.moonriver.staking.max_col_per_nom }}                              |
+    |              Round               |  | {{ networks.moonriver.staking.round_blocks }} blocks ({{ networks.moonriver.staking.round_hours }} hours) |
+    |          Bond duration           |  |                             {{ networks.moonriver.staking.bond_lock }} rounds                             |
 
 ## 奖励发放 {: #reward-distribution } 
 
@@ -52,8 +63,10 @@ Moonbeam基于[Polkadot权益证明模型](https://wiki.polkadot.network/docs/le
 
 公式中的权益等于提名人绑定的代币数量与收集人持有总代币量之比。
 
-## 在Moonbase Alpha上进行尝试 {: #try-it-on-moonbase-alpha } 
+## Try it out {: #try-it-out } 
 
 在Moonbase Alpha测试网上，代币持有者可以进行质押挖矿并赚取奖励，以测试该系统（系统中的代币没有任何实际价值）。
 
 具体使用方法请查看[此教程](/staking/stake/)。
+
+--8<-- 'text/moonriver-launch/staking-phase-4.md'

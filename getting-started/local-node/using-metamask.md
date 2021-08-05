@@ -42,13 +42,29 @@ description: 本教程将指导您如何通过谷歌浏览器上的MetaMask插�
 
 在MetaMask中，找到设置 -> 网络 -> 添加网络。您可在此处使用以下网络配置进行设置：
 
-Moonbeam开发节点：
+=== "Moonbeam Development Node"
 
---8<-- 'text/metamask-local/development-node-details.md'
+    - Network Name: `Moonbeam Dev`
+    - RPC URL: `{{ networks.development.rpc_url }}`
+    - ChainID: `{{ networks.development.chain_id }}`
+    - Symbol (Optional): `DEV`
+    - Block Explorer (Optional): `{{ networks.development.block_explorer }}`
 
-Moonbase Alpha测试网：
+=== "Moonbase Alpha TestNet"
 
---8<-- 'text/testnet/testnet-details.md'
+    - Network Name: `Moonbase Alpha`
+    - RPC URL: `{{ networks.moonbase.rpc_url }}`
+    - ChainID: `{{ networks.moonbase.chain_id }}`
+    - Symbol (Optional): `DEV`
+    - Block Explorer (Optional): `{{ networks.moonbase.block_explorer }}`
+
+=== "Moonriver"
+
+    - Network Name: `Moonriver`
+    - RPC URL: `{{ networks.moonriver.rpc_url }}`
+    - ChainID: `{{ networks.moonriver.chain_id }}`
+    - Symbol (Optional): `MOVR`
+    - Block Explorer (Optional): `{{ networks.moonriver.block_explorer }}`
 
 按照本教程步骤，我们接着将MetaMask连接到本地运行的Moonbeam开发节点。
 

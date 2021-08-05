@@ -309,9 +309,7 @@ describe ('MyToken', () => {
 
 在编译合约之后并准备部署合约之前，您必须为Mars生成合约工件。 Mars使用合约工件在部署中进行类型检查。然后您需要创建一个部署脚本并部署`MyToken`智能合约。
 
-请知晓：合约将部署至Moonbase Alpha并需要使用测试网进行配置：
-
---8<-- 'text/testnet/testnet-details.md'
+Remember, you will be deploying to Moonbase Alpha and will need to use the TestNet RPC URL: `{{ networks.moonbase.rpc_url }}`.
 
 部署将分为三个部分：[生成工件](#生成工件)、[创建部署脚本](#创建部署脚本)和[使用Mars部署](#使用Mars进行部署)。
 

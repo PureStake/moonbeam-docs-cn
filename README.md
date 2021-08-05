@@ -27,10 +27,11 @@ Moonbeam还将成为波卡（Polkadot）网络的平行链。这意味着Moonbea
 
 ### 网络 {: #networks }
 
-目前，任选以下一种方式，助您轻松参与Moonbeam构建：
+Currently, there are a few ways you can start building on Moonbeam: 
 
  - 将您的Moonbeam实例构建为[独立节点](/getting-started/local-node/setting-up-a-node/)
  - [连接](/getting-started/moonbase/connect/)到[Moonbase Alpha TestNet](/networks/moonbase/) 
+ - [Connect](/getting-started/moonriver/connect/) to [Moonriver](/networks/moonriver/)
 
 ### 钱包 {: #wallets }
 

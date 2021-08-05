@@ -30,6 +30,7 @@ web3 = Web3(Web3.HTTPProvider('RPC_URL'))
 
  - Moonbeam开发节点: `http://127.0.0.1:9933`
  - Moonbase Alpha测试网: `https://rpc.testnet.moonbeam.network`
+ - Moonriver: `{{ networks.moonriver.rpc_url }}`
 
 ## 分步教程 {: #step-by-step-tutorials } 
 

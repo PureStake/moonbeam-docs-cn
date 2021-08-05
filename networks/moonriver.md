@@ -15,11 +15,11 @@ _更新至2021年6月30日_
 
 ## 初始配置 {: #initial-configurations } 
 
-Moonriver预先设定了[5个阶段的部署过程](https://moonbeam.network/networks/moonriver/launch/)。目前，Moonriver处于第0阶段并有以下配置：
+Moonriver is scheduled to follow a [5-phase launch process](https://moonbeam.network/networks/moonriver/launch/). Currently, Moonriver is in Phase 1 of the launch process and has the following configurations:
 
-- 以平行链的形式运行并连接至Kusama中继链
-- 拥有一个由PureStake代表Moonbeam基金会运营并含有{{ networks.moonriver.staking.max_collators }}位收集人的有效集。将会在第1阶段举行一次初始收集人选举，以扩展Moonbeam团队以外的收集人集。
-- 两个由PureStake运营的RPC端点。用户可以运行全节点以访问其所有的私人RPC端点。
+- Runs as a parachain connected to the Kusama relay chain
+- Has an active set of {{ networks.moonriver.staking.max_collators }} collators, all hosted by PureStake on behalf of the Moonbeam Foundation. There is an initial collator election during Phase 1 to expand the collator set to parties outside of the Moonbeam team
+- There are two RPC endpoints (hosted by PureStake). People can run full nodes to access their own private RPC endpoints
 
 ![Moonriver Diagram](/images/moonriver/moonriver-diagram.png)
 
@@ -90,7 +90,7 @@ Moonriver的最小单位是Sediment（Sed），需要10^18个Sediment以组成�
 
 Moonriver通过其5个阶段的上线过程后，网络将会更新成为一个完全去中心化的权益证明网络。如果您想了解每个阶段的最新内容，请访问[网络上线状态](https://moonbeam.network/networks/moonriver/launch/)页面。
 
-在第1阶段，将会举行一次初始收集人选举，同时收集人有效集的初始集元数量将会是32个。当在第2阶段开启治理功能后，收集人有效集中的集元数量将会由治理决定。有效集的集元组成将由质押（包括提名）排名决定。
+In the current phase, Phase 1, there is an initial collator election to fill the {{ networks.moonriver.staking.max_collators }} spots in the active collator set. Once governance is enabled in Phase 2, the number of collators in the active set will be subject to governance. The active set will consist of the top collators by stake, including nominations.
 
 ## 限制 {: #limitations } 
 

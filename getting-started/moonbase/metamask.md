@@ -17,15 +17,7 @@ description: 学习如何在Moonbeam测试网上使用MetaMask。本教程将教
 !!! 注意事项
     MetaMask将会跳出弹框，要求授权将Moonbase Alpha添加为自定义网络。经授权后，MetaMask会将您当前的网络切换到Moonbase Alpha。
 
-## 建立一个钱包 {: #creating-a-wallet }
-
-当您成功安装MetaMask之后，系统将会自动打开一个欢迎页面。请点击"Get Started"来开始设置。
-
-![MetaMask1](/images/testnet/testnet-metamask1.png)
-
-页面跳转之后，会出现使用恢复助记词来导入钱包的选项。在本教程中，我们需要建立新钱包。
-
-![MetaMask2](/images/testnet/testnet-metamask2.png)
+--8<-- 'text/common/create-metamask-wallet.md'
 
 ## 连接至Moonbase Alpha {: #connecting-to-moonbase-alpha }
 
@@ -39,7 +31,11 @@ description: 学习如何在Moonbeam测试网上使用MetaMask。本教程将教
 
 在对应空格复制粘贴下列信息，并点击Save (保存)：
 
---8<-- 'text/testnet/testnet-details.md'
+  - Network Name: `Moonbase Alpha`
+  - RPC URL: `{{ networks.moonbase.rpc_url }}`
+  - ChainID: `{{ networks.moonbase.chain_id }}`
+  - Symbol (Optional): `DEV`
+  - Block Explorer: `{{ networks.moonbase.block_explorer }}`
 
 ![MetaMask5](/images/testnet/testnet-metamask5.png)
 

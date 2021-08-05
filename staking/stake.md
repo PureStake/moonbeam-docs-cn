@@ -21,15 +21,30 @@ description: 本教程将展示如何通过提名收集人在Moonbeam质押代�
 
 --8<-- 'text/staking/staking-definitions.md'
 
-目前，对于Moonbase Alpha来说，上述参数具体如下：
+=== "目前，对于Moonbase Alpha来说，上述参数具体如下："
 
-|        变量        |      |                              值                              |
-| :----------------: | :--: | :----------------------------------------------------------: |
-|   最低提名质押量   |      |     {{ networks.moonbase.staking.min_nom_stake }}枚代币      |
-|   最低提名持有量   |      |     {{ networks.moonbase.staking.min_nom_amount}}枚代币      |
-| 提名者的收集人限额 |      |       {{ networks.moonbase.staking.max_col_per_nom }}        |
-|        轮次        |      | {{ networks.moonbase.staking.round_blocks }}区块（{{ networks.moonbase.staking.round_hours }}小时） |
-|      绑定时长      |      |         {{ networks.moonbase.staking.bond_lock }}轮          |
+    |        变量        |      |                              值                              |
+    | :----------------: | :--: | :----------------------------------------------------------: |
+    |   最低提名质押量   |      |     {{ networks.moonbase.staking.min_nom_stake }}枚代币      |
+    |   最低提名持有量   |      |     {{ networks.moonbase.staking.min_nom_amount}}枚代币      |
+    | 提名者的收集人限额 |      |       {{ networks.moonbase.staking.max_col_per_nom }}        |
+    |        轮次        |      | {{ networks.moonbase.staking.round_blocks }}区块（{{ networks.moonbase.staking.round_hours }}小时） |
+    |      绑定时长      |      |         {{ networks.moonbase.staking.bond_lock }}轮          |
+
+=== "Moonriver"
+
+    |             Variable             |  |                                                   Value                                                   |
+    |:--------------------------------:|::|:---------------------------------------------------------------------------------------------------------:|
+    |     Minimum nomination stake     |  |                           {{ networks.moonriver.staking.min_nom_stake }} MOVR                             |
+    |        Minimum nomination        |  |                           {{ networks.moonriver.staking.min_nom_amount}} MOVR                             |
+    | Maximum nominators per collators |  |                             {{ networks.moonriver.staking.max_nom_per_col }}                              |
+    | Maximum collators per nominator  |  |                             {{ networks.moonriver.staking.max_col_per_nom }}                              |
+    |              Round               |  | {{ networks.moonriver.staking.round_blocks }} blocks ({{ networks.moonriver.staking.round_hours }} hours) |
+    |          Bond duration           |  |                             {{ networks.moonriver.staking.bond_lock }} rounds                             |
+
+--8<-- 'text/moonriver-launch/staking-phase-4.md'
+
+This guide will show you how to stake on Moonbase Alpha.
 
 ## 外部参数定义
 

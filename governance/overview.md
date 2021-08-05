@@ -26,6 +26,26 @@ Moonbeam作为去中心化网络，将由核心开发者、应用程序开发者
  - **锁定期** —— 赢得投票用户的代币锁定期（提案执行后）。在此期间，用户仍可使用锁定代币进行质押或投票
  - **委托** —— 将自己的投票权委托给其他账户，以积累一定信念值的行为
 
+=== "Moonbase Alpha"
+
+    |         Variable         |  |                                                              Value                                                              |
+    |:------------------------:|::|:-------------------------------------------------------------------------------------------------------------------------------:|
+    |      Voting Period       |  |       {{ networks.moonbase.democracy.vote_period.blocks}} blocks ({{ networks.moonbase.democracy.vote_period.days}} days)       |
+    | Fast-Track Voting Period |  | {{ networks.moonbase.democracy.fast_vote_period.blocks}} blocks ({{ networks.moonbase.democracy.fast_vote_period.hours}} hours) |
+    |     Enactment Period     |  |      {{ networks.moonbase.democracy.enact_period.blocks}} blocks ({{ networks.moonbase.democracy.enact_period.days}} day)       |
+    |     Cool-off Period      |  |       {{ networks.moonbase.democracy.cool_period.blocks}} blocks ({{ networks.moonbase.democracy.cool_period.days}} days)       |
+    |     Minimum Deposit      |  |                                        {{ networks.moonbase.democracy.min_deposit }} DEV                                        |
+
+=== "Moonriver"
+
+    |         Variable         |  |                                                              Value                                                              |
+    |:------------------------:|::|:-------------------------------------------------------------------------------------------------------------------------------:|
+    |      Voting Period       |  |      {{ networks.moonriver.democracy.vote_period.blocks}} blocks ({{ networks.moonriver.democracy.vote_period.days}} days)      |
+    | Fast-Track Voting Period |  | {{ networks.moonriver.democracy.fast_vote_period.blocks}} blocks ({{ networks.moonriver.democracy.fast_vote_period.days}} day) |
+    |     Enactment Period     |  |     {{ networks.moonriver.democracy.enact_period.blocks}} blocks ({{ networks.moonriver.democracy.enact_period.days}} day)      |
+    |     Cool-off Period      |  |      {{ networks.moonriver.democracy.cool_period.blocks}} blocks ({{ networks.moonriver.democracy.cool_period.days}} days)      |
+    |     Minimum Deposit      |  |                                       {{ networks.moonriver.democracy.min_deposit }} MOVR                                       |
+
 ## 原则 {: #principles } 
 
 在参与Moonbeam治理流程中，我们还希望用户做到以下几点：
@@ -45,19 +65,30 @@ Moonbeam的“硬性”治理流程将由链上流程驱动，并采用由民主
 
 这一治理机制的主要组成部分包括：
 
- - **公投** —— 关于修改关键参数值、代码升级或治理机制本身等事宜需要提案并进行公投
- - **投票** —— 各代币持有者在权重规则下进行公投。公投通过后，提案将进入延迟执行期，不同意该提案的用户可以在此期间退出网络
- - **理事会** —— 由用户投票产生，在系统中有特殊投票权。理事会成员的职责是提出公投，并对公众提案的公投有一票否决权。理事会成员通过滚动选举的方式选出，GLMR持有者可以对新任和现任委员会成员投票
- - **财政库**—— 一系列的资金，提交提案并充值后即可进行支出。消费提案必须经过委员会同意。若提案遭到拒绝，提案者将失去充值的资金
+ - **Referendum** — a proposal for a change to the Moonbeam system including values for key parameters, code upgrades, or changes to the governance system itself
+ - **Voting** — referenda will be voted on by token holders on a stake-weighted basis. Referenda which pass are subject to delayed enactment such that people that disagree with the direction of the decision have time to exit the network
+ - **Council** — a group of elected individuals who have special voting rights within the system. Council members are expected to propose referenda for voting and have an ability to veto publicly-sourced referenda. There are rolling elections for council members where GLMR holders will vote on new or existing council members. The Council is also responsible for electing the technical committee
+ - **Technical Committee** — a group of individuals elected by the Council who have special voting rights. As in Polkadot and Kusama, the Technical Committee has the ability to (along with the Council) fast-track emergency referenda voting and implementation in urgent circumstances. A fast-tracked referendum can be created alongside existing active referenda. That is to say, an emergency referendum does not replace currently active referenda
+ - **Treasury** — A collection of funds that can be spent by submitting a proposal along with a deposit. Spending proposals must be approved by the council. Rejected proposals will result in the proposer losing their deposit
 
 更多关于Substrate框架模块的链上治理详情，请查阅[Polkadot网站概述](https://polkadot.network/a-walkthrough-of-polkadots-governance/)和[wiki博客](https://wiki.polkadot.network/docs/learn-governance)。
 
-## 在Moonbase Alpha上进行测试 {: #try-it-on-moonbase-alpha } 
+## Voting Rights of the Council and the Technical Committee {: #voting-rights-of-the-council-and-the-technical-committee } 
+
+This section covers some background information on voting rights. There is a limit to the amount of time in blocks that the technical committee and the council have to vote on motions. Motions may end in fewer blocks if there are already enough votes submitted to determine the outcome. A maximum of {{ networks.moonbase.democracy.max_proposals}} proposals can be open each in the technical committee and in the council.
+
+**Voting Rights to Cancel:**
+
+ * The technical committee may cancel a proposal before it has been passed only by unanimous vote
+ * A single technical committee member may veto an inbound council proposal, however, they can only veto it once, and it only lasts for the cool-off period ({{ networks.moonbase.democracy.cool_period.days}} days)
+
+## Try it out {: #try-it-out } 
 
 目前，Moonbase Alpha测试网上的代币持有者可以提交提案并进行投票。具体步骤请查阅以下教程：
 
  - [提案](/governance/proposals/)
  - [投票](/governance/voting/)
 
-理事会和财政库相关功能尚未部署。
+--8<-- 'text/moonriver-launch/governance-phase-2.md'
 
+理事会和财政库相关功能尚未部署。
